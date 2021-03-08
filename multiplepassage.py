@@ -20,6 +20,7 @@ import numpy as np
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 #####################
 # Earthquake, station, and plotting parameters
@@ -31,12 +32,12 @@ import matplotlib.pyplot as plt
 elat = -29.735 # earthquake latitude
 elon = -177.282 # earthquake longitude
 t0 = obspy.UTCDateTime('2021-03-04T19:28:32') # quake origin time
-t_start = t0 - 0.5*86400 
-t_end = t0 + 2*86400
+t_start = t0 - 0.5*86400 # start time of waveform for data request
+t_end = t0 + 2*86400 # end time of waveform for data request
 
 # Station parameters
-slat = 34.94591
-slon = -106.4572
+slat = 34.94591 # station latitude
+slon = -106.4572 # station longitude
 net = "IU"
 sta = "ANMO"
 loc = "00"
@@ -46,14 +47,16 @@ cha = "VHZ"
 fmin = 1e-3 # minimum frequency for spectrum + spectrogram
 fmax = 1e-2 # max frequency for spectrum + spectrogram
 figtitle = "M8.1 Kermadec Earthquake, recorded on GSN IU.ANMO.00"
-clim = 1e3 # max value for color bar
+clim = 1e3 # max value for color bar - try changing this! 
 cmap = 'magma' # color palette to use for spectrogram
 ylim = (-1*clim,clim) # y limits for time series plot
 plot_rayleigh = False # plot theoretical Rayleigh wave arrival times
 #####################
 
 # Initialize client for requesting waveforms
-client = Client("IRIS")
+# Remember, obspy can request from many different data centers! 
+# list from docs: https://docs.obspy.org/packages/obspy.clients.fdsn.html
+client = Client("IRIS") 
 
 print('requesting data')
 st = client.get_waveforms("IU", "ANMO", "00", "VHZ", t_start, t_end)
@@ -118,7 +121,7 @@ if plot_rayleigh:
         c_odd = cycle[n_odd]
         t_arr = (x+i*earth_circ)/u - dt
         ax_tfr.plot(t_arr,f, label='R{}'.format(2*i+1), color=c_odd)
-        t = ax_tfr.text(t_arr[0], 1.0e-2, 'R{}'.format(n_odd), color=c_odd, 
+        t = ax_tfr.text(t_arr[0], fmax, 'R{}'.format(n_odd), color=c_odd, 
                         **font_props)
         print(2*i+1, x+i*earth_circ)
     
@@ -127,7 +130,7 @@ if plot_rayleigh:
         t_arr_min = (earth_circ - x + i*earth_circ)/u - dt
         ax_tfr.plot(t_arr_min,f, ls=':', label='R{}'.format(n_even), 
                     color=c_even)
-        t = ax_tfr.text(t_arr_min[0], 1e-2, 'R{}'.format(n_even), 
+        t = ax_tfr.text(t_arr_min[0], fmax, 'R{}'.format(n_even), 
                         color=c_even, **font_props)
         print(2*(i+1), earth_circ - x + i*earth_circ, '--')#
 
@@ -142,6 +145,15 @@ ax_freq = fig.axes[2]
 ax_freq.set_ylabel('frequency (Hz)')
 fig.set_size_inches(10,5)
 fig.suptitle(figtitle)
+
+
+# overlay explanatory graphics (what is R2, anyway?)
+im = plt.imread('sketches.png')
+# box spec: [left, bottom, width, height]
+newax = fig.add_axes([0.05, 0.05, 0.2, 0.2], anchor='SW')
+newax.imshow(im)
+newax.axis('off')
+
 
 plt.savefig('multiplepassage.png', dpi=300)
 print('plot saved to multiplepassage.png')
