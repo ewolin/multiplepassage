@@ -22,9 +22,9 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 #####################
-# earthquake, station, and plotting parameters
+# Earthquake, station, and plotting parameters
 # edit to suit your quake/station of interest
-# easy math: 3600 s = 1 hr, 86400 s = 1 day
+# easy math shortcuts: 3600 s = 1 hr, 86400 s = 1 day
 
 # Earthquake origin parameters
 # example is for an M8.1 in Kermadec Islands
@@ -46,12 +46,13 @@ cha = "VHZ"
 fmin = 1e-3 # minimum frequency for spectrum + spectrogram
 fmax = 1e-2 # max frequency for spectrum + spectrogram
 figtitle = "M8.1 Kermadec Earthquake, recorded on GSN IU.ANMO.00"
-clim=1e3 # max value for color bar
-ylim=(-1*clim,clim) # y limits for time series plot
+clim = 1e3 # max value for color bar
+cmap = 'magma' # color palette to use for spectrogram
+ylim = (-1*clim,clim) # y limits for time series plot
 plot_rayleigh = False # plot theoretical Rayleigh wave arrival times
 #####################
 
-# initialize client for requesting waveforms
+# Initialize client for requesting waveforms
 client = Client("IRIS")
 
 print('requesting data')
@@ -89,14 +90,14 @@ tr = st[0]
 dt = tr.stats.starttime - t0 # time between start of window and quake origin
 
 fig = plot_tfr(tr.data, dt=tr.stats.delta, fmin=fmin, fmax=fmax, w0=10,
-         clim=1e3, cmap='magma', show=False)
+               clim=clim, cmap=cmap, show=False)
 
 # plot dispersion curves on top
 T, u = np.loadtxt('t-vs-u.csv',  unpack=True, delimiter=',')
 f = 1./T
 
 # Optional: Plot predicted Rayleigh wave arrival times 
-# in t-vs-u.csv, digitized from Oliver (1962) Fig 2.
+# using dispersion curves in t-vs-u.csv, digitized from Oliver (1962) Fig 2.
 # https://pubs.geoscienceworld.org/ssa/bssa/article/52/1/81/101314
 
 x_m, meh, meh = gps2dist_azimuth(elat, elon, slat, slon)
@@ -133,7 +134,7 @@ if plot_rayleigh:
 
 # Add labels etc to axes
 ax_seis = fig.axes[0]
-ax_seis.set_ylim(-1.0e3,1.0e3)
+ax_seis.set_ylim(ylim)
 ax_seis.set_xlabel('time (s) since {} UTC'.format(tr.stats.starttime.strftime('%Y-%m-%dT%H:%M')))
 
 
