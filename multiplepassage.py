@@ -4,7 +4,7 @@
 # and plot a spectrogram (OK, actually a continuous wavelet transfomr)
 # and optionally overlay theoretical Rayleigh wave arrival times
 # to demonstrate multiple passages of surface waves
-# (and make a damn pretty plot)
+# (and make a pretty plot)
 # written by Emily Wolin, 2021
 #
 # requires ObsPy:
