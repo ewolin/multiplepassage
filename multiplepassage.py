@@ -134,6 +134,13 @@ if plot_rayleigh:
                         color=c_even, **font_props)
         print(2*(i+1), earth_circ - x + i*earth_circ, '--')#
 
+    # overlay explanatory sketch showing minor vs major arc 
+    im = plt.imread('sketches.png')
+    # box spec: [left, bottom, width, height]
+    newax = fig.add_axes([0.05, 0.05, 0.2, 0.2], anchor='SW')
+    newax.imshow(im)
+    newax.axis('off')
+
 
 # Add labels etc to axes
 ax_seis = fig.axes[0]
@@ -147,12 +154,6 @@ fig.set_size_inches(10,5)
 fig.suptitle(figtitle)
 
 
-# overlay explanatory graphics (what is R2, anyway?)
-im = plt.imread('sketches.png')
-# box spec: [left, bottom, width, height]
-newax = fig.add_axes([0.05, 0.05, 0.2, 0.2], anchor='SW')
-newax.imshow(im)
-newax.axis('off')
 
 
 plt.savefig('multiplepassage.png', dpi=300)
