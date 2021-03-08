@@ -7,10 +7,12 @@ After a large (M7ish) quake:
 to demonstrate multiple passages of surface waves
 (and make a damn pretty plot)
 
-Example script, waveforms, and plot provided for March 2021 M8.1 earthquake near the Kermadec Islands, New Zealand.
+Example script, waveforms, and plot provided for March 2021 M8.1 earthquake near the Kermadec Islands, New Zealand recorded on GSN station IU.ANMO.
 
 requires ObsPy:
+
 https://docs.obspy.org/
+
 https://github.com/obspy/obspy/wiki#installation
 
 
