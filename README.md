@@ -5,7 +5,7 @@ After a large (M7ish) quake:
 * plot a spectrogram (OK, actually a continuous wavelet transform)
 * and optionally overlay theoretical Rayleigh wave arrival times
 to demonstrate multiple passages of surface waves
-(and make a damn pretty plot)
+(and make a pretty plot)
 
 Example script, waveforms, and plot provided for March 2021 M8.1 earthquake near the Kermadec Islands, New Zealand recorded on GSN station IU.ANMO.
 
