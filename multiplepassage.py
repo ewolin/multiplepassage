@@ -28,7 +28,7 @@ import matplotlib.pyplot as plt
 
 # Earthquake origin parameters
 # example is for an M8.1 in Kermadec Islands
-elat = 29.735 # earthquake latitude
+elat = -29.735 # earthquake latitude
 elon = -177.282 # earthquake longitude
 t0 = obspy.UTCDateTime('2021-03-04T19:28:32') # quake origin time
 t_start = t0 - 0.5*86400 
