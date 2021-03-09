@@ -9,7 +9,7 @@ to demonstrate multiple passages of surface waves
 
 ![M8.1 Kermadec quake at IU.ANMO](https://github.com/ewolin/multiplepassage/blob/main/multiplepassage.png?raw=true)
 
-Set plot\_arrivals = True to see predicted Rayleigh wave arrival times:
+Set plot\_rayleigh = True to see predicted Rayleigh wave arrival times:
 
 ![M8.1 Kermadec quake at IU.ANMO, Rayleigh wave arrivals overlaid](https://github.com/ewolin/multiplepassage/blob/main/multiplepassage_arrivals_on.png?raw=true)
 
